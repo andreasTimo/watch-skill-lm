@@ -6,6 +6,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "init_watch_lm_project.py"
 NOTEBOOK_ID = "11111111-2222-4333-8444-555555555555"
 
@@ -50,7 +52,7 @@ def test_init_is_idempotent_for_same_project(tmp_path: Path) -> None:
 
 def test_init_hardens_existing_mapping_permissions(tmp_path: Path) -> None:
     if os.name != "posix":
-        return
+        pytest.skip("POSIX permission bits are not portable to Windows")
     assert run_init(tmp_path).returncode == 0
     private_dir = tmp_path / ".watch-lm"
     mapping = private_dir / "notebook.json"
@@ -79,7 +81,10 @@ def test_init_rejects_invalid_notebook_id(tmp_path: Path) -> None:
 def test_init_rejects_symlinked_private_directory(tmp_path: Path) -> None:
     outside = tmp_path / "outside"
     outside.mkdir()
-    (tmp_path / ".watch-lm").symlink_to(outside, target_is_directory=True)
+    try:
+        (tmp_path / ".watch-lm").symlink_to(outside, target_is_directory=True)
+    except OSError:
+        pytest.skip("symlink creation is unavailable on this host")
 
     result = run_init(tmp_path)
     assert result.returncode != 0
