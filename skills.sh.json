@@ -1,17 +1,9 @@
 {
-  "name": "watch-skill",
-  "description": "Give any AI agent a video input: watch, remember with timestamped evidence, and verify the agent's own work through THE LOOP.",
-  "homepage": "https://github.com/oxbshw/watch-skill",
+  "name": "watch-skill-lm",
+  "description": "Watch videos, preserve evidence, and build source-grounded reusable agent knowledge in one NotebookLM notebook per project.",
+  "homepage": "https://github.com/andreasTimo/watch-skill-lm",
   "license": "MIT",
-  "author": "oxbshw",
-  "keywords": [
-    "video",
-    "vision",
-    "ocr",
-    "transcription",
-    "mcp",
-    "verification",
-    "memory"
-  ],
+  "author": "andreasTimo",
+  "keywords": ["video", "notebooklm", "mcp", "memory", "skills", "evidence"],
   "skills": "./skills"
 }
